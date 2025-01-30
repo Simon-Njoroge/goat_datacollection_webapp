@@ -1,0 +1,519 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Collection Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/styles' %}">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            z-index: 100px;
+        }
+
+        nav {
+            height: 55px;
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            box-shadow: 0px 0px 4px rgb(66, 65, 65);
+            background: white;
+            z-index: 50;
+        }
+
+        .left {
+            width: 20px;
+        }
+
+        .middle {
+            width: 60%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .middle img {
+            width: 40px;
+        }
+
+        .Search1 {
+            padding: 10px;
+            width: 80%;
+            border-radius: 10px;
+            border: 0.5px solid rgb(178, 212, 250);
+        }
+
+        .Search1:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            outline: none;
+        }
+
+        .middle button {
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+        }
+
+        .right {
+            display: flex;
+            align-items: center;
+        }
+
+        .right p {
+            margin-left: 10px;
+            font-weight: bold;
+        }
+
+        .right div {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            overflow: hidden;
+            margin: 10px;
+        }
+
+        .right div img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .main-container {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            margin-top: 55px;
+        }
+
+        .side-bar {
+            width: 300px;
+            position: fixed;
+            top: 55px;
+            bottom: 0;
+            left: 0;
+            box-shadow: 0px 0px 4px rgb(1, 31, 53);
+            display: flex;
+            flex-direction: column;
+
+
+            background: white;
+        }
+
+        .side-bar a {
+            text-decoration: none;
+            color: rgb(0, 0, 100);
+            font-size: large;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+            margin: 18px 0;
+            margin-left: 2%;
+            display: block;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .side-bar a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            left: 0;
+            bottom: -3px;
+            border-radius: 20px;
+            background-color: rgb(0, 0, 154);
+            transform: scaleX(0);
+            transition: transform 0.5s ease;
+        }
+
+        .side-bar a:hover::after {
+            transform: scaleX(1);
+        }
+
+        .side-bar a img {
+            width: 20px;
+        }
+
+
+
+
+
+        @media (max-width: 750px) {
+            .side-bar {
+                display: none;
+                width: 60%;
+                position: fixed;
+                background: white;
+                box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.2);
+            }
+
+            .side-bar.open {
+                display: flex;
+            }
+        }
+
+        .container2 {
+            margin-left: 300px;
+
+            width: 100vh;
+
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background-color: #002244;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2,
+        h3,
+        h4 {
+            color: #333;
+            text-transform: capitalize;
+        }
+
+        .form-section {
+            background: #fff;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #555;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: #ddd;
+            margin: 20px 0;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 600px) {
+
+            input,
+            select {
+                width: 100%;
+            }
+
+
+
+            .container2 {
+                margin: auto;
+                width: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="left"></div>
+            <div class="middle">
+                <button class="menu-btn"><img src="images/menu.png" alt="Menu"></button>
+                <input class="Search1" type="text" placeholder="Search...">
+                <button><img src="images/search-icon.png" alt=""></button>
+            </div>
+            <div class="right">
+                <div>
+                    <img src="images/profile-img.jpg" alt="Profile">
+                </div>
+                <p>Welcome, User</p>
+            </div>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <div class="side-bar js-side-bar">
+            <a href="#livestock"><img src="images/side.png" alt="">Livestock Farmer</a>
+            <a href="##fodder"><img src="images/side.png" alt="">Fodder Farmer</a>
+            <a href="#infrastracture"><img src="images/side.png" alt="">Infrastructure</a>
+            <a href="#Capacity"><img src="images/side.png" alt="">Capacity Building</a>
+            <a href="/admin/logout/"><img src="images/side.png" alt="">Log Out</a>
+        </div>
+        <div class="container2">
+            <section>
+                <h1>Submit Livestock Details</h1>
+
+                <form action="/admin/analyst/submit-livestock/" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                
+                    <!-- Farmer Details -->
+                    <div class="mb-4">
+                        <label for="id_farmer_details" class="block text-lg font-semibold mb-2">Farmer Details (ID)</label>
+                        <input type="text" name="farmer_details" id="id_farmer_details" required class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                    </div>
+                
+                    <!-- Number of Goats -->
+                    <div class="mb-4">
+                        <label for="id_number_of_goats" class="block text-lg font-semibold mb-2">Number of Goats</label>
+                        <input type="number" name="number_of_goats" id="id_number_of_goats" required class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                    </div>
+                
+                    <!-- Male Goats -->
+                    <div class="mb-4">
+                        <label for="id_male_goats" class="block text-lg font-semibold mb-2">Male Goats</label>
+                        <input type="number" name="male_goats" id="id_male_goats" required class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                    </div>
+                
+                    <!-- Female Goats -->
+                    <div class="mb-4">
+                        <label for="id_female_goats" class="block text-lg font-semibold mb-2">Female Goats</label>
+                        <input type="number" name="female_goats" id="id_female_goats" required class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                    </div>
+                
+                    <!-- Goats between 1 and 6 months -->
+                    <div class="mb-4">
+                        <label for="id_goats_1_6_months" class="block text-lg font-semibold mb-2">Goats 1-6 months</label>
+                        <input type="number" name="goats_1_6_months" id="id_goats_1_6_months" required class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="mb-4">
+                        <label for="id_weight_1_7_kgs" class="block text-lg font-semibold mb-2">Weight 1-7 kg</label>
+                        <input type="number" name="weight_1_7_kgs" id="id_weight_1_7_kgs" required class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="mb-4">
+                        <label for="id_weekly_goats_sold" class="block text-lg font-semibold mb-2">Weekly Goats Sold</label>
+                        <input type="number" name="weekly_goats_sold" id="id_weekly_goats_sold" required class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="mb-4">
+                        <label for="id_amount_paid_to_farmer" class="block text-lg font-semibold mb-2">Amount Paid to Farmer</label>
+                        <input type="number" step="0.01" name="amount_paid_to_farmer" id="id_amount_paid_to_farmer" required class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="mb-4">
+                        <label for="id_date_sold" class="block text-lg font-semibold mb-2">Date Sold</label>
+                        <input type="date" name="date_sold" id="id_date_sold" required class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="mb-4">
+                        <label for="id_vaccination_schedule" class="block text-lg font-semibold mb-2">Vaccination Schedule</label>
+                        <textarea name="vaccination_schedule" id="id_vaccination_schedule" required class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+                
+                    <!-- Deworming Schedule -->
+                    <div class="mb-4">
+                        <label for="id_deworming_schedule" class="block text-lg font-semibold mb-2">Deworming Schedule</label>
+                        <input type="date" name="deworming_schedule" id="id_deworming_schedule" required class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                    </div>
+                
+                    <!-- Breeding Info -->
+                    <div class="mb-4">
+                        <label for="id_breeding_info" class="block text-lg font-semibold mb-2">Breeding Information</label>
+                        <textarea name="breeding_info" id="id_breeding_info" required class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+                
+                    <!-- Traceability System -->
+                    <div class="mb-4">
+                        <label for="id_traceability_system" class="block text-lg font-semibold mb-2">Traceability System</label>
+                        <textarea name="traceability_system" id="id_traceability_system" required class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+                
+                    <!-- Submit Button -->
+                    <div class="mb-4">
+                        <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300">Submit</button>
+                    </div>
+                </form>
+                
+            
+            </section>
+
+            <section class="fodder-famer">
+
+                <section id="fodder">
+                    <div class="form-section">
+                        <h2>2. Fodder Farmers</h2>
+                        <label for="ff-name">Name:</label>
+                        <input type="text" id="ff-name" name="ff-name" required>
+
+                        <label for="ff-id">ID No:</label>
+                        <input type="text" id="ff-id" name="ff-id" required>
+
+                        <label for="ff-phone">Phone No:</label>
+                        <input type="text" id="ff-phone" name="ff-phone" required>
+
+                        <label for="ff-location">Location:</label>
+                        <input type="text" id="ff-location" name="ff-location" required>
+
+                        <h4>Land Acreage for Fodder Growing:</h4>
+                        <label for="ff-leased">Leased:</label>
+                        <input type="text" id="ff-leased" name="ff-leased">
+
+                        <h3>Sharing Model:</h3>
+                        <div>
+                            <label for="ff-sharing">Name of the groups:</label>
+                            <input type="text" id="group_name" name="group_name">
+
+                            <label for="ff-sharing">Number of group members</label>
+                            <input type="text" id="group_members" name="group_members">
+
+                            <label for="ff-sharing">Location:</label>
+                            <input type="text" id="location" name="location">
+
+                            <label for="ff-land">Total hectares under pastures:</label>
+                            <input type="text" id="land_under_pasture">
+
+                        </div>
+                        <label for="ff-yield">Yield per Harvest:</label>
+                        <input type="text" id="ff-yield" name="ff-yield">
+                        <label for="region">Choose your region:</label>
+                        <select name="region" id="region">
+                            {% for key, value in regions %}
+                            <option value="{{ key }}">{{ value }}</option>
+                            {% endfor %}
+                        </select>
+
+                    </div>
+                </section>
+
+            </section>
+            <section class="infrastracture">
+
+                <section id="infrastracture">
+                    <h2>3.Infrastructure</h2>
+                    <div class="form-sinput" type="text">
+                        <h4>a.Borehole</h4>
+                        <label for=" infra-locat">Location:</label>
+                        <input type=" text" id="infra-location" name="infra-location">
+
+                        <label for="infra-water">Amount of Water Used:</label>
+                        <input type="text" id="infra-water" name="infra-water">
+
+                        <label for="infra-people">No of People Using water:</label>
+                        <input type="text" id="infra-people" name="infra-people">
+
+                        <label for="infra-people">No of livestock Using water:</label>
+                        <input type="text" id="livestock_water" name="livestock_water">
+
+                        <h4>b.Hay Storage</h4>
+                        <label for="infra-bales-stored">Size of hay:</label>
+                        <input type="text" id="hay_size" name="hay_size">
+
+                        <label for="infra-bales-stored">No of Bales Stored:</label>
+                        <input type="text" id="infra-bales-stored" name="infra-bales-stored">
+
+                        <label for="infra-bales-sold">No of Bales Given / Sold to Livestock Farmers:</label>
+                        <input type="text" id="infra-bales-sold" name="infra-bales-sold">
+
+                        <label for="infra-revenue">Revenue Made After Selling Surplus:</label>
+                        <input type="text" id="infra-revenue" name="infra-revenue">
+                        <label for="region">Choose your region:</label>
+                        <select name="region" id="region">
+                            {% for key, value in regions %}
+                            <option value="{{ key }}">{{ value }}</option>
+                            {% endfor %}
+                        </select>
+
+                    </div>
+                </section>
+            </section>
+            <section class="Capacity-buiding">
+
+                <section id="Capacity">
+                    <div class="form-section">
+                        <h2>4. Capacity Building</h2>
+                        <h3>No of Trainings:</h3>
+                        <label for="cb-trainings">Number of people trained(fimale):</label>
+                        <input type="text" id="male_trained" name="male_trained">
+
+                        <label for="cb-trainings">Number of people trained(fimale):</label>
+                        <input type="text" id="female_trained" name="fimale_trained">
+
+
+                        <label for="cb-modules">Modules:</label>
+                        <input type="text" id="cb-modules" name="cb-modules">
+                        <label for="region">Choose your region:</label>
+                        <select name="region" id="region">
+                            {% for key, value in regions %}
+                            <option value="{{ key }}">{{ value }}</option>
+                            {% endfor %}
+                        </select>
+
+                    </div>
+                </section>
+            </section>
+
+        </div>
+    </div>
+
+    <script>
+        const menuBtn = document.querySelector('.menu-btn');
+        const sidebar = document.querySelector('.js-side-bar');
+
+        menuBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+    </script>
+    <footer class="footer">
+        &copy; 2025 Data Collection Dashboard | All Rights Reserved
+    </footer>
+</body>
+
+</html>

@@ -100,6 +100,7 @@ class Infrastructure(models.Model):
     bales_given_or_sold = models.PositiveIntegerField(default=0)
     revenue_made = models.FloatField(default=0.0)
     region = models.CharField(max_length=255)
+    date=models.DateTimeField(default=timezone.now)
 
     def _str_(self):
         return self.location

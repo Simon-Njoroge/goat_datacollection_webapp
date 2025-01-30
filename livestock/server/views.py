@@ -22,10 +22,12 @@ def register_user(request):
         user.set_password(password)
         user.save()
 
-        return redirect('register_success.html')
+        return redirect('/admin/register/success/')
 
     return render(request, 'register_user.html')
 
+def register_success(request):
+    return render(request,'register_success.html')
 
 def view_users(request):
     users = CustomUser.objects.all()
@@ -48,7 +50,7 @@ def login_user(request):
                 
 
                 if user.role == 'analyst':
-                    return redirect('analyst_dashboard')
+                    return redirect('/admin/form/analyst/add/all/')
                 elif user.role == 'admin':
                     return redirect('/admin/site/dashboard/dashboard/')
                 else:
@@ -130,3 +132,65 @@ def add_farmer(request):
         return redirect('success_page') 
 
     return render(request, 'add_farmers.html')
+
+def livestock_form(request):
+    return render(request,'livestock_form.html')
+
+
+from django.shortcuts import redirect
+
+from django.shortcuts import redirect
+from django.http import HttpResponse
+import logging
+
+logger = logging.getLogger(__name__)
+
+def submit_livestock(request):
+    if request.method == 'POST':
+        # Handle form submission
+        farmer_details = request.POST.get('farmer_details')  # Get the farmer details
+        number_of_goats = request.POST.get('number_of_goats')
+        male_goats = request.POST.get('male_goats')
+        female_goats = request.POST.get('female_goats')
+        goats_1_6_months = request.POST.get('goats_1_6_months')
+        weight_1_7_kgs = request.POST.get('weight_1_7_kgs')
+        weekly_goats_sold = request.POST.get('weekly_goats_sold')
+        amount_paid_to_farmer = request.POST.get('amount_paid_to_farmer')
+        date_sold = request.POST.get('date_sold')
+        vaccination_schedule = request.POST.get('vaccination_schedule')
+        deworming_schedule = request.POST.get('deworming_schedule')
+        breeding_info = request.POST.get('breeding_info')
+        traceability_system = request.POST.get('traceability_system')
+
+        # Find the Farmer Details based on the provided ID
+        try:
+            farmer_details_instance = FarmersDetails.objects.get(id=farmer_details)
+        except FarmersDetails.DoesNotExist:
+            return HttpResponse("Farmer not found", status=400)
+
+        # Create a new LivestockFarmer instance
+        livestock_farmer = LivestockFarmer(
+            farmer_details=farmer_details_instance,
+            number_of_goats=number_of_goats,
+            male_goats=male_goats,
+            female_goats=female_goats,
+            goats_1_6_months=goats_1_6_months,
+            weight_1_7_kgs=weight_1_7_kgs,
+            weekly_goats_sold=weekly_goats_sold,
+            amount_paid_to_farmer=amount_paid_to_farmer,
+            date_sold=date_sold,
+            vaccination_schedule=vaccination_schedule,
+            deworming_schedule=deworming_schedule,
+            breeding_info=breeding_info,
+            traceability_system=traceability_system
+        )
+
+        # Save the object to the database
+        livestock_farmer.save()
+
+        return HttpResponse("Form submitted successfully!")
+
+    # Render the form if it's a GET request
+    return render(request, 'livestock_form.html')
+
+
