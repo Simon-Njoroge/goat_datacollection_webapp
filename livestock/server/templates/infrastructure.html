@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<main id="main" class="main">
+
+  <div class="pagetitle">
+    <h1>Capacity Building</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'capacity_building_list' %}">Home</a></li>
+        <li class="breadcrumb-item">Tables</li>
+        <li class="breadcrumb-item active">Capacity Building</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+
+  <div class="card">
+    <div class="card-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Region</th>
+            <th>Water Used</th>
+            <th>People Using Water</th>
+            <th>Livestock Using Water</th>
+            <th>Bales Stored</th>
+            <th>Hay Size</th>
+            <th>Bales Given or Sold</th>
+            <th>Revenue Made</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for infrastructure in infrastructures %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ infrastructure.region }}</td>
+            <td>{{ infrastructure.water_used }}</td>
+            <td>{{ infrastructure.people_using_water }}</td>
+            <td>{{ infrastructure.livestock_using_water }}</td>
+            <td>{{ infrastructure.bales_stored }}</td>
+            <td>{{ infrastructure.hay_size }}</td>
+            <td>{{ infrastructure.bales_given_or_sold }}</td>
+            <td>{{ infrastructure.revenue_made }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="9">No Infrastructure Data Found</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+{% endblock %}

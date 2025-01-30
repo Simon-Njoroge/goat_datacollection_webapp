@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+{% load static %}
+{%block body%}
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Form Layouts</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">Forms</li>
+                <li class="breadcrumb-item active">Add Farmer</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="container mt-5">
+        <h2 class="text-center">Add Farmer</h2>
+        <div class="card shadow-lg p-4">
+            <form action="/admin/new/add-farmer/" method="post",enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_number" class="form-label">ID Number</label>
+                    <input type="text" class="form-control" id="id_number" name="id_number" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="phone_number" class="form-label">Phone Number</label>
+                    <input type="text" class="form-control" id="phone_number" name="phone_number" required>
+                </div>
+
+                <div class="mb-3">
+                    
+                    <label for="location" class="form-label">Location</label>
+                    <input type="text" class="form-control" id="location" name="location" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Submit</button>
+            </form>
+        </div>
+    </div>
+</main>
+{%endblock%}

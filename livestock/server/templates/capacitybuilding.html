@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+{% block body %}
+<main id="main" class="main">
+
+  <div class="pagetitle">
+    <h1>Capacity building</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'capacity_building_list' %}">Home</a></li>
+        <li class="breadcrumb-item">Tables</li>
+        <li class="breadcrumb-item active">Capacity Building</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+
+  <div class="card">
+    <div class="card-body">
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Region</th>
+            <th>Trainings</th>
+            <th>People Trained</th>
+            <th>Modules</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for training in trainings %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ training.region }}</td>
+            <td>{{ training.number_of_trainings }}</td>
+            <td>{{ training.number_of_people_trained }}</td>
+            <td>{{ training.modules_covered }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No Capacity Building Data Found</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+</div>
+
+</main>
+
+{% endblock %}
