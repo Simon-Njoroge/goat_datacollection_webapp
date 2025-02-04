@@ -17,5 +17,5 @@ urlpatterns = [
    path('new/add-farmer/', views.add_farmer, name='add_farmer'),
    path('new/add/farmer/success/', lambda request: render(request, 'success.html'), name='success_page'),
    path('form/analyst/add/all/', views.livestock_form, name='livestock_form'),
-   # path('analyst/submit-livestock/', views.submit_livestock, name='submit_livestock')
+   path('analyst/submit-livestock/', views.submit_livestock, name='submit_livestock')
 ]
